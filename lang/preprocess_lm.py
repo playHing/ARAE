@@ -193,7 +193,7 @@ def main(arguments):
     parser.add_argument('--batchsize', help="Size of each minibatch.", type=int, default=32)
     parser.add_argument('--seqlength', help="Maximum source sequence length. Sequences longer "
                                                "than this are dropped.", type=int, default=200)
-    parser.add_argument('--outputfile', help="Prefix of the output file names. ", type=str)
+    parser.add_argument('--outputfile', help="Prefix of the output file names. ", type=str, default='data/lm')
     parser.add_argument('--vocabfile', help="If working with a preset vocab, "
                                           "then including this will ignore srcvocabsize and use the"
                                           "vocab provided here.",

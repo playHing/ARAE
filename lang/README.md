@@ -40,7 +40,7 @@ python preprocess_lm.py --trainfile generated-data.txt --valfile real-val.txt --
 To train the model
 
 ```
-python train_rnnlm.py --train_file lm-data-train.hdf5 --val_file lm-data-val.hdf5 --checkpoint_path lm-model.ptb
+python train_rnnlm.py --train_file lm-data-train.hdf5 --val_file lm-data-val.hdf5 --checkpoint_path lm-model.ptb --test 0
 ```
 
 To evaluate on test

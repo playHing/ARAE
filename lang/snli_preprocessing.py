@@ -72,9 +72,9 @@ def write_sentences(write_path, premises, hypotheses, append=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--in_path', type=str, default="../Data/snli_1.0",
+    parser.add_argument('--in_path', type=str, default="data/snli_1.0",
                         help='path to snli data')
-    parser.add_argument('--out_path', type=str, default="../Data/snli_lm",
+    parser.add_argument('--out_path', type=str, default="data/snli_lm",
                         help='path to write snli language modeling data to')
     args = parser.parse_args()
 
@@ -96,5 +96,5 @@ if __name__ == "__main__":
 
     premises, hypotheses = \
         transform_data(os.path.join(args.in_path, "snli_1.0_dev.jsonl"))
-    write_sentences(write_path=os.path.join(args.out_path, "train.txt"),
+    write_sentences(write_path=os.path.join(args.out_path, "dev.txt"),
                     premises=premises, hypotheses=hypotheses, append=True)

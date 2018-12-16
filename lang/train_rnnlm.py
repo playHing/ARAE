@@ -39,8 +39,8 @@ parser.add_argument('--checkpoint_path', default='baseline.pt')
 parser.add_argument('--num_epochs', default=15, type=int)
 parser.add_argument('--lr', default=1, type=float)
 parser.add_argument('--max_grad_norm', default=5, type=float)
-parser.add_argument('--test', default=, type=int)
-parser.add_argument('--gpu', default=2, type=int)
+parser.add_argument('--test', default=1, type=int)
+parser.add_argument('--gpu', default=0, type=int)
 parser.add_argument('--seed', default=3435, type=int)
 parser.add_argument('--print_every', type=int, default=500)
 
@@ -151,7 +151,7 @@ def main(args):
       optimizer.zero_grad()
       preds = model(sents)
       nll = sum([criterion(preds[:, l], sents[:, l+1]) for l in range(length)])
-      train_nll += nll.data[0]*batch_size
+      train_nll += nll.item()*batch_size
       nll.backward()
       if args.max_grad_norm > 0:
         torch.nn.utils.clip_grad_norm(model.parameters(), args.max_grad_norm)        
@@ -161,7 +161,7 @@ def main(args):
       num_words += batch_size * length
       
       if b % args.print_every == 0:
-        param_norm = sum([p.norm()**2 for p in model.parameters()]).data[0]**0.5
+        param_norm = sum([p.norm()**2 for p in model.parameters()]).item()**0.5
         print('Epoch: %d, Batch: %d/%d, LR: %.4f, TrainPPL: %.2f, |Param|: %.4f, BestValPerf: %.2f, Throughput: %.2f examples/sec' % 
               (epoch, b, len(train_data), args.lr, np.exp(train_nll / num_words), 
                param_norm, best_val_ppl, num_sents / (time.time() - start_time)))
@@ -191,7 +191,7 @@ def eval(data, model, criterion):
       sents = sents.cuda()
     preds = model.forward(sents)
     nll = sum([criterion(preds[:, l], sents[:, l+1]) for l in range(length)])
-    total_nll += nll.data[0]*batch_size
+    total_nll += nll.item()*batch_size
   ppl = np.exp(total_nll / num_words)
   print('PPL: %.4f' % (ppl))
   model.train()

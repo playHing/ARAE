@@ -1,0 +1,5 @@
+yelp/yelp_example/*
+yelp/__pycache__/*
+lang/data/*
+lang/checkpoint/*
+*/run_result*
